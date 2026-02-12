@@ -1,3 +1,6 @@
+#include "color.h"
+#include "vec3.h"
+
 #include <iostream>
 void generate_ppm_rg(int, int, int);
 
@@ -31,15 +34,11 @@ void generate_ppm_rg(int x, int y, int z) {
     for (int j = 0; j < image_height; j++) {
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; i++) {
-            auto r = double(i) / (image_width-1) * x;
-            auto g = double(j) / (image_height-1) * y;
-            auto b = z * (double(i) / (image_width-1) * x + double(j) / (image_height-1) * y);
+            auto pixel_color = color(double(i) / (image_width-1) * x,
+            double(j) / (image_height-1) * y,
+            z * (double(i) / (image_width-1) * x + double(j) / (image_height-1) * y));
 
-            int ir = int(255.999 * r);
-            int ig = int(255.999 * g);
-            int ib = int(255.999 * b);
-
-            std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+            write_color(std::cout, pixel_color);
         }
     }
 
